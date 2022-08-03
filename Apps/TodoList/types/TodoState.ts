@@ -1,0 +1,3 @@
+type TodosState = {
+  todos: Todo[];
+};
