@@ -10,9 +10,9 @@
 
 import React from 'react';
 import {Provider} from 'react-redux';
-import Home from './src/screens/Home';
+import Home from './Apps/Counter/screens/Home';
 import {createStore} from 'redux';
-import {rootReducer} from './src/redux/CounterStore';
+import {rootReducer} from './Apps/Counter/redux/store/CounterStore';
 
 const store = createStore(rootReducer);
 

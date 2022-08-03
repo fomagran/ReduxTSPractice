@@ -1,7 +1,7 @@
 import {View, Pressable, Text} from 'react-native';
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../redux/CounterStore';
+import {RootState} from '../redux/store/CounterStore';
 import {CounterAction, CounterActionType} from '../redux/actions/CounterAction';
 
 const Home = () => {
