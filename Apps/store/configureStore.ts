@@ -9,5 +9,5 @@ export const rootReducer = combineReducers({
 
 export interface RootState {
   counter: Counter;
-  todoList: TodosState;
+  todoList: TodoState;
 }

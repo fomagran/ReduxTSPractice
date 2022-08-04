@@ -10,21 +10,15 @@ import ToDoComponent from '../components/TodoComponent';
 
 const Home = () => {
   const dispatch = useDispatch();
-  let todos = useSelector<RootState, Todo[]>(state => state.todoList.todos);
-  const [isModalVisible, setModalVisible] = useState(false);
+  const todoState = useSelector<RootState, TodoState>(state => state.todoList);
+  const emptyTodo: Todo = {title: '', content: '', author: ''};
 
-  useEffect(() => {}, [todos]);
-
-  const [todo, setTodo] = useState<Todo>({
-    title: '',
-    content: '',
-    author: '',
-  });
+  useEffect(() => {}, [todoState]);
 
   const act = (type: TodoActionType, selectedIndex: number) => {
     let action: TodoAction = {
       type: type,
-      payload: todo,
+      payload: todoState.todos[selectedIndex],
       selectedIndex: selectedIndex,
     };
     dispatch(action);
@@ -36,16 +30,23 @@ const Home = () => {
         <Text style={{marginLeft: 20, fontSize: 25, fontWeight: 'bold'}}>
           To Do List
         </Text>
-        <Pressable onPress={() => act(TodoActionType.tapDelete, 1)}>
+        <Pressable onPress={() => act(TodoActionType.modalOpen, -1)}>
           <Icon name="plus-a" style={styles.plus} />
         </Pressable>
       </View>
-      <AddModal isModalVisible={isModalVisible} todo={todo}></AddModal>
+      <AddModal
+        isModalVisible={todoState.isModalVisible}
+        todo={
+          todoState.selectedIndex == -1
+            ? emptyTodo
+            : todoState.todos[todoState.selectedIndex]
+        }
+        selectedIndex={todoState.selectedIndex}></AddModal>
       <FlatList
         style={styles.list}
         contentContainerStyle={{paddingBottom: 50}}
-        data={todos}
-        keyExtractor={item => item.author}
+        data={todoState.todos}
+        keyExtractor={item => item.title}
         renderItem={({item, index}) => {
           return <ToDoComponent todo={item} index={index} />;
         }}

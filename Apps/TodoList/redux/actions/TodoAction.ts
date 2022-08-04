@@ -2,6 +2,8 @@ export enum TodoActionType {
   tapAdd,
   tapDelete,
   tapUpdate,
+  modalOpen,
+  modalClose,
 }
 
 export type TodoAction = {

@@ -1,22 +1,23 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, Pressable, Modal, TextInput} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {TodoAction, TodoActionType} from '../redux/actions/TodoAction';
 import {styles} from '../Styles/AddModalStyles';
 
 interface AddModalProps {
-  isModalVisible: boolean;
   todo: Todo;
+  isModalVisible: boolean;
+  selectedIndex: number;
 }
 
 const AddModal: React.FC<AddModalProps> = props => {
+  const dispatch = useDispatch();
+
   const [todo, setTodo] = useState<Todo>({
     author: '',
     title: '',
     content: '',
   });
-
-  useEffect(() => {
-    setTodo(props.todo);
-  }, [props]);
 
   const handleInputChange = (key: string, value: string | number) => {
     setTodo(prevState => ({
@@ -25,13 +26,18 @@ const AddModal: React.FC<AddModalProps> = props => {
     }));
   };
 
-  const cleanup = () => {
-    setTodo({
-      author: '',
-      title: '',
-      content: '',
-    });
-  };
+  function act(type: TodoActionType) {
+    let action: TodoAction = {
+      type: type,
+      payload: todo,
+      selectedIndex: props.selectedIndex,
+    };
+    dispatch(action);
+  }
+
+  useEffect(() => {
+    setTodo(props.todo);
+  }, [props]);
 
   return (
     <Modal
@@ -65,18 +71,14 @@ const AddModal: React.FC<AddModalProps> = props => {
             }}></TextInput>
           <View style={styles.closeContainer}>
             <Pressable
-              onPress={() => {
-                if (!props.isModalVisible) {
-                  cleanup();
-                }
-              }}>
+              onPress={() =>
+                props.selectedIndex == -1
+                  ? act(TodoActionType.tapAdd)
+                  : act(TodoActionType.tapUpdate)
+              }>
               <Text style={styles.button}> Submit </Text>
             </Pressable>
-            <Pressable
-              onPress={() => {
-                console.log(props.todo);
-                cleanup();
-              }}>
+            <Pressable onPress={() => act(TodoActionType.modalClose)}>
               <Text style={styles.button}> Close </Text>
             </Pressable>
           </View>
