@@ -4,17 +4,14 @@ import {styles} from '../Styles/AddModalStyles';
 
 interface AddModalProps {
   isModalVisible: boolean;
-  todo: TodoModel;
-  handleClose: () => {};
-  handleSubmit: () => {};
+  todo: Todo;
 }
 
 const AddModal: React.FC<AddModalProps> = props => {
-  const [todo, setTodo] = useState<TodoModel>({
+  const [todo, setTodo] = useState<Todo>({
     author: '',
     title: '',
     content: '',
-    priority: -1,
   });
 
   useEffect(() => {
@@ -33,7 +30,6 @@ const AddModal: React.FC<AddModalProps> = props => {
       author: '',
       title: '',
       content: '',
-      priority: -1,
     });
   };
 
@@ -43,9 +39,7 @@ const AddModal: React.FC<AddModalProps> = props => {
       transparent={true}
       presentationStyle={'overFullScreen'}
       visible={props.isModalVisible}
-      onRequestClose={() => {
-        props.handleClose();
-      }}>
+      onRequestClose={() => {}}>
       <View style={styles.container}>
         <View style={styles.form}>
           <TextInput
@@ -69,23 +63,12 @@ const AddModal: React.FC<AddModalProps> = props => {
             onChangeText={text => {
               handleInputChange('content', text);
             }}></TextInput>
-          <TextInput
-            value={todo.priority !== -1 ? String(todo.priority) : ''}
-            style={styles.input}
-            placeholder="priority"
-            onChangeText={text => {
-              handleInputChange(
-                'priority',
-                isNaN(Number(text)) ? -1 : Number(text),
-              );
-            }}></TextInput>
           <View style={styles.closeContainer}>
             <Pressable
               onPress={() => {
                 if (!props.isModalVisible) {
                   cleanup();
                 }
-                props.handleSubmit(todo);
               }}>
               <Text style={styles.button}> Submit </Text>
             </Pressable>
@@ -93,7 +76,6 @@ const AddModal: React.FC<AddModalProps> = props => {
               onPress={() => {
                 console.log(props.todo);
                 cleanup();
-                props.handleClose();
               }}>
               <Text style={styles.button}> Close </Text>
             </Pressable>

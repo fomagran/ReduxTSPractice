@@ -7,4 +7,5 @@ export enum TodoActionType {
 export type TodoAction = {
   type: TodoActionType;
   payload: Todo;
+  selectedIndex: number;
 };
