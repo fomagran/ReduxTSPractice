@@ -10,9 +10,9 @@
 
 import React from 'react';
 import {Provider} from 'react-redux';
-import Home from './Apps/TodoList/screens/Home';
+import Home from './Apps/Redux/TodoList/screens/Home';
 import {createStore} from 'redux';
-import {rootReducer} from './Apps/store/configureStore';
+import {rootReducer} from './Apps/Redux/store/configureStore';
 
 const store = createStore(rootReducer);
 
