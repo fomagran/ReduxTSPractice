@@ -4,6 +4,8 @@ import {useDispatch} from 'react-redux';
 import {TodoPayload} from '../types/TodoPayload';
 import todoSlice from '../redux/TodoSlice';
 import {styles} from '../Styles/AddModalStyles';
+import {useAddTodoMutation} from '../api/TodoAPISlice';
+import {useEditTodoMutation} from '../api/TodoAPISlice';
 
 interface AddModalProps {
   todo: TodoModel;
@@ -14,8 +16,11 @@ interface AddModalProps {
 const AddModal: React.FC<AddModalProps> = props => {
   const dispatch = useDispatch();
   const actions = todoSlice.actions;
+  const [addTodo] = useAddTodoMutation();
+  const [editTodo] = useEditTodoMutation();
 
   const [todo, setTodo] = useState<TodoModel>({
+    id: -1,
     title: '',
     content: '',
   });
@@ -57,13 +62,13 @@ const AddModal: React.FC<AddModalProps> = props => {
           <View style={styles.closeContainer}>
             <Pressable
               onPress={() => {
-                const payload: TodoPayload = {
-                  todo: todo,
-                  selectedIndex: props.selectedIndex,
-                };
-                props.selectedIndex == -1
-                  ? dispatch(actions.add(payload))
-                  : dispatch(actions.edit(payload));
+                if (props.selectedIndex == -1) {
+                  addTodo(todo);
+                  dispatch(actions.add());
+                } else {
+                  editTodo(todo);
+                  dispatch(actions.edit());
+                }
               }}>
               <Text style={styles.button}> Submit </Text>
             </Pressable>

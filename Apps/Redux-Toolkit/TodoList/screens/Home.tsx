@@ -8,12 +8,14 @@ import Icon from 'react-native-vector-icons/Fontisto';
 import ToDoComponent from '../components/TodoComponent';
 import todoSlice, {TodoState} from '../redux/TodoSlice';
 import {TodoPayload} from '../types/TodoPayload';
+import {useGetAllTodosQuery} from '../api/TodoAPISlice';
 
 const Home = () => {
   const dispatch = useDispatch();
   const todoState = useSelector<RootState, TodoState>(state => state.todoList);
-  const emptyTodo: TodoModel = {title: '', content: ''};
+  const emptyTodo: TodoModel = {id: -1, title: '', content: ''};
   const actions = todoSlice.actions;
+  const {data} = useGetAllTodosQuery('');
 
   useEffect(() => {}, [todoState]);
 
@@ -36,13 +38,13 @@ const Home = () => {
         todo={
           todoState.selectedIndex == -1
             ? emptyTodo
-            : todoState.todos[todoState.selectedIndex]
+            : data![todoState.selectedIndex]
         }
         selectedIndex={todoState.selectedIndex}></AddModal>
       <FlatList
         style={styles.list}
         contentContainerStyle={{paddingBottom: 50}}
-        data={todoState.todos}
+        data={data}
         keyExtractor={item => item.title}
         renderItem={({item, index}) => {
           return <ToDoComponent todo={item} index={index} />;

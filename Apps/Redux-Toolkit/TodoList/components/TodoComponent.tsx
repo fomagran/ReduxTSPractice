@@ -5,6 +5,7 @@ import {useDispatch} from 'react-redux';
 import {TodoPayload} from '../types/TodoPayload';
 import todoSlice from '../redux/TodoSlice';
 import {styles} from '../Styles/TodoStyles';
+import {useDeleteTodoMutation} from '../api/TodoAPISlice';
 
 interface TodoProps {
   todo: TodoModel;
@@ -14,6 +15,7 @@ interface TodoProps {
 const ToDoComponent: React.FC<TodoProps> = props => {
   const dispatch = useDispatch();
   const actions = todoSlice.actions;
+  const [deleteTodo] = useDeleteTodoMutation();
 
   return (
     <View style={styles.container}>
@@ -32,11 +34,7 @@ const ToDoComponent: React.FC<TodoProps> = props => {
         </Pressable>
         <Pressable
           onPress={() => {
-            const payload: TodoPayload = {
-              todo: {title: '', content: ''},
-              selectedIndex: props.index,
-            };
-            dispatch(actions.delete(payload));
+            deleteTodo(props.todo.id);
           }}>
           <Icon style={styles.trash} name="trash"></Icon>
         </Pressable>
