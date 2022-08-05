@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {View, Text, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/Fontisto';
 import {useDispatch} from 'react-redux';
-import {TodoPayload} from '../redux/actions/TodoPayload';
+import {TodoPayload} from '../types/TodoPayload';
 import todoSlice from '../redux/TodoSlice';
 import {styles} from '../Styles/TodoStyles';
 
@@ -23,7 +23,7 @@ const ToDoComponent: React.FC<TodoProps> = props => {
         <Pressable
           onPress={() => {
             const payload: TodoPayload = {
-              todo: {title: '', content: ''},
+              todo: null,
               selectedIndex: props.index,
             };
             dispatch(actions.modalOpen(payload));

@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {todos} from '../Datas/todoDatas';
-import {TodoPayload} from './actions/TodoPayload';
+import {TodoPayload} from '../types/TodoPayload';
 
 export interface TodoState {
   todos: TodoModel[];
@@ -20,25 +20,22 @@ export const todoSlice = createSlice({
   reducers: {
     add: (state, action: PayloadAction<TodoPayload>) => {
       let newTodos = state.todos;
-      newTodos.push(action.payload.todo);
+      newTodos.push(action.payload.todo!);
       state.todos = newTodos;
       state.isModalVisible = false;
     },
     delete: (state, action: PayloadAction<TodoPayload>) => {
       let newTodos = state.todos;
-      newTodos.splice(action.payload.selectedIndex, 1);
+      newTodos.splice(action.payload.selectedIndex!, 1);
       state.todos = newTodos;
     },
     edit: (state, action: PayloadAction<TodoPayload>) => {
-      console.log(action.payload);
-
-      state.todos[action.payload.selectedIndex] = action.payload.todo;
-      console.log(state.todos);
+      state.todos[action.payload.selectedIndex!] = action.payload.todo!;
       state.isModalVisible = false;
     },
     modalOpen: (state, action: PayloadAction<TodoPayload>) => {
       state.isModalVisible = true;
-      state.selectedIndex = action.payload.selectedIndex;
+      state.selectedIndex = action.payload.selectedIndex!;
     },
     modalClose: state => {
       state.isModalVisible = false;

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, Pressable, Modal, TextInput} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {TodoPayload} from '../redux/actions/TodoPayload';
+import {TodoPayload} from '../types/TodoPayload';
 import todoSlice from '../redux/TodoSlice';
 import {styles} from '../Styles/AddModalStyles';
 

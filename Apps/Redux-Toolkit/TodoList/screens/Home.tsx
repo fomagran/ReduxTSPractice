@@ -7,7 +7,7 @@ import {styles} from '../Styles/TodoListStyles';
 import Icon from 'react-native-vector-icons/Fontisto';
 import ToDoComponent from '../components/TodoComponent';
 import todoSlice, {TodoState} from '../redux/TodoSlice';
-import {TodoPayload} from '../redux/actions/TodoPayload';
+import {TodoPayload} from '../types/TodoPayload';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const Home = () => {
         </Text>
         <Pressable
           onPress={() => {
-            const payload: TodoPayload = {todo: emptyTodo, selectedIndex: -1};
+            const payload: TodoPayload = {todo: null, selectedIndex: -1};
             dispatch(actions.modalOpen(payload));
           }}>
           <Icon name="plus-a" style={styles.plus} />
