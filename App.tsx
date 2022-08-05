@@ -10,8 +10,8 @@
 
 import React from 'react';
 import {Provider} from 'react-redux';
-import Home from './Apps/Redux-Toolkit/Counter/screens/Home';
-import store from './Apps/Redux-Toolkit/Counter/Redux/store';
+import Home from './Apps/Redux-Toolkit/TodoList/screens/Home';
+import store from './Apps/Redux-Toolkit/store';
 
 const App = () => {
   return (
