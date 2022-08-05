@@ -19,24 +19,24 @@ const todoReducer = (
   let newTodos = state.todos;
   switch (action.type) {
     case TodoActionType.tapAdd:
-      newTodos.push(action.payload);
+      newTodos.push(action.payload.todo);
       return {
         ...state,
         todos: newTodos,
         isModalVisible: false,
       };
     case TodoActionType.tapDelete:
-      newTodos.splice(action.selectedIndex, 1);
+      newTodos.splice(action.payload.selectedIndex, 1);
       return {
         ...state,
         todos: newTodos,
       };
     case TodoActionType.tapUpdate:
-      newTodos[action.selectedIndex] = action.payload;
+      newTodos[action.payload.selectedIndex] = action.payload.todo;
       return {
         ...state,
         todos: newTodos,
-        selectedIndex: action.selectedIndex,
+        selectedIndex: action.payload.selectedIndex,
         isModalVisible: false,
       };
     case TodoActionType.modalClose:
@@ -49,7 +49,7 @@ const todoReducer = (
       return {
         ...state,
         isModalVisible: true,
-        selectedIndex: action.selectedIndex,
+        selectedIndex: action.payload.selectedIndex,
       };
     default:
       return state;

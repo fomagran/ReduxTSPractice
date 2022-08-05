@@ -6,8 +6,12 @@ export enum TodoActionType {
   modalClose,
 }
 
+export type TodoPayload = {
+  todo: Todo;
+  selectedIndex: number;
+};
+
 export type TodoAction = {
   type: TodoActionType;
-  payload: Todo;
-  selectedIndex: number;
+  payload: TodoPayload;
 };
